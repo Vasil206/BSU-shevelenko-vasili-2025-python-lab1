@@ -58,22 +58,21 @@ for col in df:
     print(col, '\t', df[col].isnull().sum())
 
 
-columns=['HomePlanet', 'Cabin', 'Destination', 'Name']
-col_values_matrix = [[],[],[],[],[],[]];
-for i in range(0,4):
+columns=['HomePlanet', 'Cabin', 'Destination', 'Name', 'CryoSleep', 'VIP', 'Transported']
+col_values_matrix = [[],[],[],[],[],[],[],[],[]];
+for i in range(0,len(columns)):
     col = []
     for j in range(0, df[columns[i]].size) :
         val = df[columns[i]][j]
-        if col_values_matrix[i].count(val) == 0 :
-            col_values_matrix[i].append(val)
+        if type(val) == bool :
+            col.append(int(val))
+        else :
+            if col_values_matrix[i].count(val) == 0 :
+                col_values_matrix[i].append(val)
         
-        col.append(col_values_matrix[i].index(val))
+            col.append(col_values_matrix[i].index(val))
     df.insert(df.columns.size, columns[i]+"_int", col)
     df.pop(columns[i])
-    
-    
-    
-print(df)
 
 from sklearn.model_selection import train_test_split
 
